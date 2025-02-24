@@ -10,7 +10,7 @@ map('n', '<leader>fb', '<cmd>Telescope buffers<CR>', { desc = 'Find buffers' })
 
 -- Code actions and imports (LSP-dependent, set in lsp.lua too)
 map('n', '<leader>ai', function()
-  vim.lsp.buf.code_action { context = { only = { 'source.organizeImports' } }, apply = true }
+    vim.lsp.buf.code_action { context = { only = { 'source.organizeImports' } }, apply = true }
 end, { desc = 'Organize imports' })
 
 -- Buffer navigation
@@ -26,3 +26,5 @@ map('n', '<C-l>', '<C-w>l', { desc = 'Move to right window' })
 
 -- Tailwind
 map('n', '<leader>ts', ':TailwindSort<CR>', { desc = 'Sort Tailwind classes' })
+-- LazyGit
+map('n', '<leader>gg', ':LazyGit<CR>', { desc = 'Open LazyGit' })
