@@ -109,6 +109,7 @@ require('lazy').setup({
     'goolord/alpha-nvim',
     dependencies = { 'nvim-tree/nvim-web-devicons' },
   },
+  { 'rmagatti/auto-session', opts = {} },
 }, {})
 
 -- Load plugin-specific configs
@@ -127,3 +128,4 @@ require('plugins.project')
 require('plugins.comment')
 require('plugins.terminal')
 require('plugins.alpha')
+require('plugins.session')

@@ -12,6 +12,7 @@ startify.section.header.val = {
   '  ██║╚██╗██║██╔══╝  ██║   ██║╚██╗ ██╔╝██║██║╚██╔╝██║',
   '  ██║ ╚████║███████╗╚██████╔╝ ╚████╔╝ ██║██║ ╚═╝ ██║',
   '  ╚═╝  ╚═══╝╚══════╝ ╚═════╝   ╚═══╝  ╚═╝╚═╝     ╚═╝',
+  '          Powered by Snag & N1K Technology          ',
 }
 startify.section.top_buttons.val = {
   startify.button('e', 'New File', ':ene <BAR> startinsert<CR>'),
