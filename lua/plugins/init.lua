@@ -83,17 +83,37 @@ require('lazy').setup({
     'kdheepak/lazygit.nvim',
     dependencies = { 'nvim-lua/plenary.nvim' }
   },
-  { 'stevearc/conform.nvim', opts = {} },
+  { 'stevearc/conform.nvim',   opts = {} },
   {
     'nvim-lualine/lualine.nvim',
     dependencies = { 'nvim-tree/nvim-web-devicons' }
+  },
+  -- Add sg.nvim for Cody AI
+  {
+    'sourcegraph/sg.nvim',
+    dependencies = { 'nvim-lua/plenary.nvim', 'nvim-telescope/telescope.nvim' },
+    build = 'cargo build --workspace', -- Build Rust components
+  },
+  {
+    'akinsho/bufferline.nvim',
+    version = '*',
+    dependencies = 'nvim-tree/nvim-web-devicons',
+  },
+  {
+    'ahmedkhalf/project.nvim',
+    dependencies = { 'nvim-telescope/telescope.nvim' },
+  },
+  { 'numToStr/Comment.nvim',   opts = {} },
+  { 'akinsho/toggleterm.nvim', version = '*', opts = {} },
+  {
+    'goolord/alpha-nvim',
+    dependencies = { 'nvim-tree/nvim-web-devicons' },
   },
 }, {})
 
 -- Load plugin-specific configs
 require('plugins.lsp')
 require('plugins.treesitter')
-require('plugins.telescope')
 require('plugins.nvimtree')
 require('plugins.theme')
 require('plugins.dap')
@@ -101,3 +121,9 @@ require('plugins.tailwind')
 require('plugins.format')
 require('plugins.snippets')
 require('plugins.lualine')
+require('plugins.cody')
+require('plugins.bufferline')
+require('plugins.project')
+require('plugins.comment')
+require('plugins.terminal')
+require('plugins.alpha')
