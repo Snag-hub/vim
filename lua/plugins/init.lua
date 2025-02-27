@@ -110,6 +110,7 @@ require('lazy').setup({
     dependencies = { 'nvim-tree/nvim-web-devicons' },
   },
   { 'rmagatti/auto-session', opts = {} },
+  { 'Hoffs/omnisharp-extended-lsp.nvim' },
 }, {})
 
 -- Load plugin-specific configs
