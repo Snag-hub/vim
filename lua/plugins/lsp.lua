@@ -11,8 +11,9 @@ local default_on_attach = function(client, bufnr)
   vim.keymap.set("n", "K", vim.lsp.buf.hover, opts)
   vim.keymap.set("n", "<leader>ca", vim.lsp.buf.code_action, opts)
   vim.keymap.set("n", "<leader>rn", vim.lsp.buf.rename, opts)
-  vim.keymap.set("n", "<leader>f", function() vim.lsp.buf.format { async = true } end, opts)
-  print(client.name .. " LSP attached")
+  vim.keymap.set("n", "<leader>f", function()
+    require("conform").format({ async = true, lsp_fallback = true })
+  end, opts)
 end
 
 local omnisharp_on_attach = function(client, bufnr)
@@ -24,8 +25,9 @@ local omnisharp_on_attach = function(client, bufnr)
   vim.keymap.set("n", "K", vim.lsp.buf.hover, opts)
   vim.keymap.set("n", "<leader>ca", vim.lsp.buf.code_action, opts)
   vim.keymap.set("n", "<leader>rn", vim.lsp.buf.rename, opts)
-  vim.keymap.set("n", "<leader>f", function() vim.lsp.buf.format { async = true } end, opts)
-  print("OmniSharp LSP attached")
+  vim.keymap.set("n", "<leader>f", function()
+    require("conform").format({ async = true, lsp_fallback = true })
+  end, opts)
 end
 
 require('mason').setup()
@@ -73,16 +75,49 @@ cmp.setup {
     ['<C-f>'] = cmp.mapping.scroll_docs(4),
     ['<C-Space>'] = cmp.mapping.complete(),
     ['<CR>'] = cmp.mapping.confirm { select = true },
-    ['<Tab>'] = cmp.mapping.select_next_item(),
-    ['<S-Tab>'] = cmp.mapping.select_prev_item(),
+    ['<Tab>'] = cmp.mapping(function(fallback)
+      if cmp.visible() then
+        cmp.select_next_item()
+      elseif require('luasnip').expand_or_jumpable() then
+        require('luasnip').expand_or_jump()
+      else
+        fallback()
+      end
+    end, { "i", "s" }),
+    ['<S-Tab>'] = cmp.mapping(function(fallback)
+      if cmp.visible() then
+        cmp.select_prev_item()
+      elseif require('luasnip').jumpable(-1) then
+        require('luasnip').jump(-1)
+      else
+        fallback()
+      end
+    end, { "i", "s" }),
   },
   sources = cmp.config.sources({
     { name = 'nvim_lsp' },
     { name = 'luasnip' },
   }, {
-      { name = 'buffer' },
-      { name = 'path' },
-    }),
+    { name = 'buffer' },
+    { name = 'path' },
+  }),
 }
 
-vim.lsp.set_log_level("debug") -- For troubleshooting
+-- Indent Blankline Configuration (Add here)
+require("ibl").setup {
+  indent = {
+    char = "│", -- Vertical line character
+    tab_char = "│",
+  },
+  scope = {
+    enabled = true,
+    show_start = true,
+    show_end = true,
+    highlight = { "Function", "Label" }, -- Colors for scope
+  },
+  exclude = {
+    filetypes = { "help", "dashboard", "packer", "NvimTree" }, -- Exclude non-code buffers
+  },
+}
+
+require("luasnip.loaders.from_vscode").lazy_load() -- Already present

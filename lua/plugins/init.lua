@@ -44,7 +44,7 @@ require('lazy').setup({
       'williamboman/mason-lspconfig.nvim',
       'hrsh7th/nvim-cmp',
       'hrsh7th/cmp-nvim-lsp',
-      'L3MON4D3/LuaSnip',
+      'L3MON4D3/LuaSnip', dependencies = { 'rafamadriz/friendly-snippets' }
     },
   },
 
@@ -83,7 +83,21 @@ require('lazy').setup({
     'kdheepak/lazygit.nvim',
     dependencies = { 'nvim-lua/plenary.nvim' }
   },
-  { 'stevearc/conform.nvim',   opts = {} },
+  {
+    'stevearc/conform.nvim',
+    opts = {
+      formatters_by_ft = {
+        html = { "prettier" },
+        javascriptreact = { "prettier" },
+        typescriptreact = { "prettier" },
+        cs = { "csharpier" }, -- Optional, needs csharpier installed
+      },
+      format_on_save = {
+        timeout_ms = 500,
+        lsp_fallback = true, -- Fallback to LSP if formatter fails
+      },
+    },
+  },
   {
     'nvim-lualine/lualine.nvim',
     dependencies = { 'nvim-tree/nvim-web-devicons' }
@@ -111,6 +125,8 @@ require('lazy').setup({
   },
   { 'rmagatti/auto-session', opts = {} },
   { 'Hoffs/omnisharp-extended-lsp.nvim' },
+  { 'windwp/nvim-autopairs', opts = {} },
+  { 'lukas-reineke/indent-blankline.nvim', main = "ibl", opts = {} },
 }, {})
 
 -- Load plugin-specific configs
@@ -130,3 +146,4 @@ require('plugins.comment')
 require('plugins.terminal')
 require('plugins.alpha')
 require('plugins.session')
+require('plugins.autopairs')
